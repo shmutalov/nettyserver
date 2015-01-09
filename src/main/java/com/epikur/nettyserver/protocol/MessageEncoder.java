@@ -1,8 +1,28 @@
 package com.epikur.nettyserver.protocol;
 
-import io.netty.handler.*;
-import io.netty.handler.codec.*;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToByteEncoder;
 
-public class MessageEncoder extends io.netty.handler.codec.{
+import java.util.List;
+
+public class MessageEncoder extends MessageToByteEncoder<Message> {
+	
+	@Override
+	protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out)
+			throws Exception {
+
+		// VERSION
+		out.writeByte(msg.getProtocolVersion().getVersion());
+		
+		// TYPE
+		out.writeByte(MessageType.toByte(msg.getType())) ;
+		
+		// PAYLOAD LENGTH
+		out.writeInt(msg.getPayload().length);
+		
+		// PAYLOAD
+		out.writeBytes(msg.getPayload());
+	}
 
 }
