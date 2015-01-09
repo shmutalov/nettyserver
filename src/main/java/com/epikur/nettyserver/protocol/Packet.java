@@ -6,7 +6,7 @@ public class Packet {
 	private byte[] payload;
 	
 	public Packet () {
-		protocolVersion = ProtocolVersion.fromByte((byte)(0));
+		protocolVersion = new ProtocolVersion((byte)(0));
 		type = PacketType.UNKNOWN;
 	}
 	
