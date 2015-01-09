@@ -2,8 +2,8 @@ package com.epikur.nettyserver.protocol.messages;
 
 import com.epikur.nettyserver.protocol.Packet;
 
-// TODO Implement Packet decoding algorithm
-// TODO Implement encoding algorithm
+// TODO 2.1 Implement Packet decoding algorithm
+// TODO 2.2 Implement encoding algorithm
 
 public class LoginMessage implements Message {
 
