@@ -1,6 +1,6 @@
 package com.epikur.nettyserver.protocol;
 
-public enum MessageType {
+public enum PacketType {
 	LOGIN 
 	, LOGOUT
 	, TEXT_MESSAGE_OPEN
@@ -10,7 +10,7 @@ public enum MessageType {
 	, CRYPT_KEY_CLIENT_TO_CLIENT
 	, UNKNOWN;
 	
-	public static MessageType fromByte(byte bType) {
+	public static PacketType fromByte(byte bType) {
 		switch (bType) {
 		case 010:
 			return LOGIN;
@@ -27,11 +27,11 @@ public enum MessageType {
 		case 051:
 			return CRYPT_KEY_CLIENT_TO_CLIENT;
 		default:
-			return MessageType.UNKNOWN;
+			return PacketType.UNKNOWN;
 		}
 	}
 	
-	public static byte toByte(MessageType mType) {
+	public static byte toByte(PacketType mType) {
 		switch (mType) {
 		case LOGIN:
 			return 010;

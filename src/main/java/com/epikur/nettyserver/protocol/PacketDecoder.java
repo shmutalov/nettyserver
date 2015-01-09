@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 
-public class MessageDecoder extends ReplayingDecoder<MessageDecoder.DecodingState> {
+public class PacketDecoder extends ReplayingDecoder<PacketDecoder.DecodingState> {
 
 	public enum DecodingState {
 		VERSION
@@ -19,8 +19,8 @@ public class MessageDecoder extends ReplayingDecoder<MessageDecoder.DecodingStat
 	private byte type;
 	private int payload_length;
 	
-	public MessageDecoder () {
-		super(MessageDecoder.DecodingState.VERSION);
+	public PacketDecoder () {
+		super(PacketDecoder.DecodingState.VERSION);
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class MessageDecoder extends ReplayingDecoder<MessageDecoder.DecodingStat
 		case PAYLOAD:
 			ByteBuf payload_buf = buf.readBytes(payload_length);
 			checkpoint(DecodingState.VERSION);
-			out.add(new Message(new ProtocolVersion(version), MessageType.fromByte(type), payload_buf.array()));
+			out.add(new Packet(new ProtocolVersion(version), PacketType.fromByte(type), payload_buf.array()));
 			break;
 		default:
 			throw new Error("Shouldn't reach here.");

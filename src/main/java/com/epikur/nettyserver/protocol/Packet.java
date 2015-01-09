@@ -1,16 +1,16 @@
 package com.epikur.nettyserver.protocol;
 
-public class Message {
+public class Packet {
 	private ProtocolVersion protocolVersion;
-	private MessageType type;
+	private PacketType type;
 	private byte[] payload;
 	
-	public Message () {
+	public Packet () {
 		protocolVersion = ProtocolVersion.fromByte((byte)(0));
-		type = MessageType.UNKNOWN;
+		type = PacketType.UNKNOWN;
 	}
 	
-	public Message(ProtocolVersion ver, MessageType type, byte [] payload) {
+	public Packet(ProtocolVersion ver, PacketType type, byte [] payload) {
 		this.protocolVersion = ver;
 		this.type = type;
 		this.payload = payload;
@@ -24,11 +24,11 @@ public class Message {
 		this.protocolVersion = version;
 	}
 
-	public MessageType getType() {
+	public PacketType getType() {
 		return type;
 	}
 
-	public void setType(MessageType type) {
+	public void setType(PacketType type) {
 		this.type = type;
 	}
 
