@@ -2,12 +2,10 @@ package com.epikur.nettyserver.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -136,7 +134,7 @@ public class ServerCommandListener implements CommandListener {
 			}
 
 			public String getHelp() {
-				return "\t\t - Stop the server";
+				return "\t\t - Stops the server";
 			}
 		});
 
@@ -189,7 +187,7 @@ public class ServerCommandListener implements CommandListener {
 		
 		System.out.println("Command list:");
 		
-		List<String> keys = new ArrayList(commands.keySet());
+		List<String> keys = new ArrayList<String>(commands.keySet());
 		
 		Collections.sort(keys);
 		
