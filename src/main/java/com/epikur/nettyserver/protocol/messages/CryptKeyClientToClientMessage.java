@@ -14,4 +14,14 @@ public class CryptKeyClientToClientMessage implements Message {
 		return null;
 	}
 
+	public void setChannelId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getChannelId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

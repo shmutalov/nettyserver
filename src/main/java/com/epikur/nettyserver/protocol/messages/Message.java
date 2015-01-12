@@ -20,4 +20,7 @@ public interface Message {
 	 * @return encoded {@link Packet}
 	 */
 	public Packet encode();
+	
+	public void setChannelId(int id);
+	public int getChannelId();
 }

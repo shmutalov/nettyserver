@@ -2,7 +2,7 @@ package com.epikur.nettyserver.protocol.messages;
 
 import com.epikur.nettyserver.protocol.Packet;
 
-public class CryptedTextMessage implements Message {
+public class LoginRejectedMessage implements Message {
 
 	public void decodePacket(Packet p) {
 		// TODO Auto-generated method stub

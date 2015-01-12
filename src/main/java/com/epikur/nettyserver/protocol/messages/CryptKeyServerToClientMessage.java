@@ -17,6 +17,9 @@ public class CryptKeyServerToClientMessage implements Message {
 	private CryptingMethod cryptMethod;
 	private byte [] key;
 	
+	// channel ID
+	private int channelId;
+	
 	/**
 	 * CryptKeyServerToClientMessage =>
 	 * <br/><b>1st byte</b> = {@link CryptingMethod}
@@ -25,6 +28,8 @@ public class CryptKeyServerToClientMessage implements Message {
 	 * @see com.epikur.nettyserver.protocol.messages.Message#decodePacket(com.epikur.nettyserver.protocol.Packet)
 	 */
 	public void decodePacket(Packet p) {
+		this.channelId = p.getChannelId();
+		
 		ByteBuffer buf = ByteBuffer.wrap(p.getPayload());
 		
 		byte bCryptMethod = buf.get();	// {CryptingMethod}
@@ -47,6 +52,7 @@ public class CryptKeyServerToClientMessage implements Message {
 		buf.put(key);
 		
 		Packet p = new Packet();
+		p.setChannelId(channelId);
 		p.setPayload(buf.array());
 		p.setType(PacketType.CRYPT_KEY_SERVER_TO_CLIENT);
 		
@@ -67,6 +73,16 @@ public class CryptKeyServerToClientMessage implements Message {
 
 	public void setKey(byte[] key) {
 		this.key = key;
+	}
+
+	public void setChannelId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getChannelId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

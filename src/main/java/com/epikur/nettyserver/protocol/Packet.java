@@ -5,15 +5,19 @@ public class Packet {
 	private PacketType type;
 	private byte[] payload;
 	
+	private int channelId;
+	
 	public Packet () {
 		protocolVersion = new ProtocolVersion((byte)(0));
 		type = PacketType.UNKNOWN;
+		setChannelId(-1);
 	}
 	
-	public Packet(ProtocolVersion ver, PacketType type, byte [] payload) {
+	public Packet(int id, ProtocolVersion ver, PacketType type, byte [] payload) {
 		this.protocolVersion = ver;
 		this.type = type;
 		this.payload = payload;
+		this.setChannelId(id);
 	}
 
 	public ProtocolVersion getProtocolVersion() {
@@ -38,5 +42,13 @@ public class Packet {
 
 	public void setPayload(byte[] payload) {
 		this.payload = payload;
+	}
+
+	public int getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(int channelId) {
+		this.channelId = channelId;
 	}
 }

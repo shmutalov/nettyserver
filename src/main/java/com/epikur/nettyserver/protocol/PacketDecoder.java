@@ -39,7 +39,8 @@ public class PacketDecoder extends ReplayingDecoder<PacketDecoder.DecodingState>
 		case PAYLOAD:
 			ByteBuf payload_buf = buf.readBytes(payload_length);
 			checkpoint(DecodingState.VERSION);
-			out.add(new Packet(new ProtocolVersion(version), PacketType.fromByte(type), payload_buf.array()));
+			
+			out.add(new Packet(ctx.channel().hashCode(), new ProtocolVersion(version), PacketType.fromByte(type), payload_buf.array()));
 			break;
 		default:
 			throw new Error("Shouldn't reach here.");
