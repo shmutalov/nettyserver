@@ -35,11 +35,20 @@ public class PacketDecoder extends ReplayingDecoder<PacketDecoder.DecodingState>
 			checkpoint(DecodingState.PAYLOAD_LENGTH);
 		case PAYLOAD_LENGTH:
 			payload_length = buf.readInt();
-			checkpoint(DecodingState.PAYLOAD);
+			
+			// packet data length check
+			if (payload_length > 0 && payload_length <= Packet.MAX_PAYLOAD_LENGTH) 
+				checkpoint(DecodingState.PAYLOAD);
+			else {
+				checkpoint(DecodingState.VERSION);
+				// incorrect packet length, then we will add UNKNOWN type packet
+				out.add(new Packet());
+			}
 		case PAYLOAD:
 			ByteBuf payload_buf = buf.readBytes(payload_length);
 			checkpoint(DecodingState.VERSION);
 			
+			// add new Packet to list
 			out.add(new Packet(ctx.channel().hashCode(), new ProtocolVersion(version), PacketType.fromByte(type), payload_buf.array()));
 			break;
 		default:

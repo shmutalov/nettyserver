@@ -1,6 +1,8 @@
 package com.epikur.nettyserver.protocol;
 
 public class Packet {
+	public final static int MAX_PAYLOAD_LENGTH = 256000;
+	
 	private ProtocolVersion protocolVersion;
 	private PacketType type;
 	private byte[] payload;

@@ -91,9 +91,9 @@ public class ServerCommandListener implements CommandListener {
 					getServer().start(args);
 				} else {
 					if (LOG.isInfoEnabled())
-						LOG.info("Server already running");
+						LOG.info("Server is already running");
 					
-					System.out.println("Server already running");
+					System.out.println("Server is already running");
 				}
 			}
 
@@ -113,9 +113,9 @@ public class ServerCommandListener implements CommandListener {
 					System.out.println("Server is not running");
 				} else {
 					if (LOG.isInfoEnabled())
-						LOG.info("Server is running");
+						LOG.info("Server is running on port " + server.getPort());
 					
-					System.out.println("Server is running");
+					System.out.println("Server is running on port " + server.getPort());
 				}
 			}
 
@@ -201,9 +201,9 @@ public class ServerCommandListener implements CommandListener {
 	
 	public void run() {
 		if (LOG.isInfoEnabled())
-			LOG.info("Starting...");
+			LOG.info("Command listener started.");
 		
-		System.out.println("Starting...");
+		System.out.println("Command listener started.");
 		
 		reader = new Scanner(System.in);
 		
@@ -225,8 +225,8 @@ public class ServerCommandListener implements CommandListener {
 		}
 		
 		if (LOG.isInfoEnabled())
-			LOG.info("Stopped");
+			LOG.info("Command listener stopped");
 		
-		System.out.println("Stopped");
+		System.out.println("Command listener stopped");
 	}
 }
