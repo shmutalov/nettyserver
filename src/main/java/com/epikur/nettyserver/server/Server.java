@@ -9,6 +9,8 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
+import com.epikur.nettyserver.protocol.Packet;
+
 public class Server {
 	private static final Logger LOG = Logger.getLogger(Server.class.getName());
 	
@@ -43,6 +45,10 @@ public class Server {
 
 	public void start(String[] args) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void send(Packet p) {
 		
 	}
 }
