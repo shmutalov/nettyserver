@@ -3,10 +3,14 @@ package com.epikur.nettyserver.protocol.messages;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.apache.log4j.Logger;
+
 import com.epikur.nettyserver.protocol.Packet;
 import com.epikur.nettyserver.server.Server;
 
 public class MessageHandler implements Runnable {
+	private static final Logger LOG = Logger.getLogger(MessageHandler.class.getName());
+	
 	private Server server;
 	
 	private Queue<Message> qInMessages;
@@ -26,6 +30,11 @@ public class MessageHandler implements Runnable {
 	 */
 	public void putOutMessage(Message msg) {
 		qOutMessages.offer(msg);
+		
+		if (LOG.isInfoEnabled()) {
+			LOG.info("New incomming message: ");
+			LOG.info(msg);
+		}
 	}
 	
 	/**
@@ -63,6 +72,10 @@ public class MessageHandler implements Runnable {
 	}
 	
 	public void run() {
+		if (LOG.isInfoEnabled())
+			LOG.info("Message handler started.");
+		System.out.println("Message handler started.");
+		
 		while (server.isRunning()) {
 			// if OUT message queue is not empty, peek next message, encode it to Packet and send
 			if (!qOutMessages.isEmpty())
@@ -71,5 +84,9 @@ public class MessageHandler implements Runnable {
 		
 		qInMessages.clear();
 		qOutMessages.clear();
+		
+		if (LOG.isInfoEnabled())
+			LOG.info("Message handler stopped.");
+		System.out.println("Message handler stopped.");
 	}
 }

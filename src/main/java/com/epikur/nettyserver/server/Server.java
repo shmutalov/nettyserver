@@ -39,6 +39,7 @@ public class Server {
 	
 	ServerChannelHandler channelHandler;
 	MessageHandler messageHandler;
+	Thread msgHandlerThread;
 	
 	public MessageHandler getMessageHandler() {
 		return messageHandler;
@@ -74,6 +75,32 @@ public class Server {
 		System.out.println("Stopping server...");
 		
 		if (isRunning()) {
+			this.running = false; 
+			
+			if (LOG.isInfoEnabled())
+				LOG.info("Stopping message handler...");
+			System.out.println("Stopping message handler...");
+			
+			try {
+				Thread.sleep(1000);
+			} catch (Exception ex) {}
+			
+			/* Message handler still alive? 
+			 * Ok, we will wait for extra 5 seconds, then
+			 * we will kill it HARDLY
+			 */
+			if (msgHandlerThread.isAlive()) {
+				if (LOG.isInfoEnabled())
+					LOG.info("Message handler still running... ");
+				System.out.println("Message handler still running... ");
+				
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {}
+				
+				msgHandlerThread.stop();
+			}
+			
 			bossExecutor.shutdownGracefully();
 			workerExecutor.shutdownGracefully();
 			
@@ -81,8 +108,6 @@ public class Server {
 			workerExecutor.terminationFuture().awaitUninterruptibly();
 			
 			srv_channel.closeFuture().awaitUninterruptibly();
-			
-			this.running = false; 
 		}
 		
 		if (LOG.isInfoEnabled())
@@ -156,6 +181,8 @@ public class Server {
 			bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 			
 			channelHandler = new ServerChannelHandler(this);
+			messageHandler = new MessageHandler(this);
+			msgHandlerThread = new Thread(messageHandler);
 			
 			if (LOG.isInfoEnabled())
 				LOG.info("Setting up handlers...");
@@ -174,11 +201,24 @@ public class Server {
 			if (f.isSuccess()) {
 				srv_channel = f.channel();
 				
-				if (LOG.isInfoEnabled())
-					LOG.info("Server started.");
-				System.out.println("Server started.");
-				
 				running = true;
+				
+				if (LOG.isInfoEnabled())
+					LOG.info("Starting message handler...");
+				System.out.println("Starting message handler...");
+				
+				msgHandlerThread.start();
+				
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {}
+				
+				if (msgHandlerThread.isAlive()) {
+					if (LOG.isInfoEnabled())
+						LOG.info("Server started.");
+					System.out.println("Server started.");
+				}
+					
 			} else {
 				LOG.log(Level.ERROR, "Cannot start server. Exception: ", f.cause());
 				System.out.println("Cannot start server.");

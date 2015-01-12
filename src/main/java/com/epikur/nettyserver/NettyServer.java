@@ -13,7 +13,7 @@ public class NettyServer {
 		ServerCommandListener cmd = new ServerCommandListener(srv);
 		
 		Thread t = new Thread(cmd);
-		t.run();
+		t.start();
 		
 		while (t.isAlive()) {
 			
