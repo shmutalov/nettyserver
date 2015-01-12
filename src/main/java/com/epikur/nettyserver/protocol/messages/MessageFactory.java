@@ -3,6 +3,11 @@ package com.epikur.nettyserver.protocol.messages;
 import com.epikur.nettyserver.protocol.PacketType;
 
 public class MessageFactory {
+	/**
+	 * Message builder factory method.
+	 * @param packetType {@link PacketType} type of result {@link Message} depends on this parameter.
+	 * @return {@link Message} or null, if {@link PacketType}  is <i>UNKNOWN</i>.
+	 */
 	public static Message getMessage(PacketType packetType) {
 		Message msg;
 		
