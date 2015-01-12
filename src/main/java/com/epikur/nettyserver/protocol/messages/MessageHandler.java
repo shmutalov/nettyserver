@@ -46,35 +46,12 @@ public class MessageHandler implements Runnable {
 		Message msg;
 		
 		if (p.getProtocolVersion().getVersion() == 0) {
-			switch (p.getType()) {
-			case CRYPT_KEY_CLIENT_TO_CLIENT:
-				msg = new CryptKeyClientToClientMessage();
-				break;
-			case CRYPT_KEY_SERVER_TO_CLIENT:
-				msg = new CryptKeyServerToClientMessage();
-				break;
-			case DISPLAY_FRAME:
-				msg = new DisplayFrameMessage();
-				break;
-			case LOGIN:
-				msg = new LoginMessage();
-				break;
-			case LOGOUT:
-				msg = new LogoutMessage();
-				break;
-			case TEXT_MESSAGE_CRYPT:
-				msg = new CryptedTextMessage();
-				break;
-			case TEXT_MESSAGE_OPEN:
-				msg = new OpenTextMessage();
-				break;
-			case UNKNOWN:
-			default:
-				return;
-			}
+			msg = MessageFactory.getMessage(p.getType());
 			
-			msg.decodePacket(p);
-			putInMessage(msg);
+			if (msg != null) {
+				msg.decodePacket(p);
+				putInMessage(msg);
+			}
 		}
 	}
 	

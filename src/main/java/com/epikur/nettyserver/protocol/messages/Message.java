@@ -1,6 +1,7 @@
 package com.epikur.nettyserver.protocol.messages;
 
 import com.epikur.nettyserver.protocol.Packet;
+import com.epikur.nettyserver.protocol.PacketType;
 
 /**
  * Interface which used with business logic message handler.
