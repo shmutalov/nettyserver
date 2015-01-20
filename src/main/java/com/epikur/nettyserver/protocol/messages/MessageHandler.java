@@ -78,8 +78,14 @@ public class MessageHandler implements Runnable {
 		
 		while (server.isRunning()) {
 			// if OUT message queue is not empty, peek next message, encode it to Packet and send
-			if (!qOutMessages.isEmpty())
+			if (qOutMessages.isEmpty())
+			{
+				try {
+					Thread.sleep(1);
+				} catch (Exception ex) {}
+			} else {
 				server.send(qOutMessages.poll().encode());
+			}
 		}
 		
 		qInMessages.clear();

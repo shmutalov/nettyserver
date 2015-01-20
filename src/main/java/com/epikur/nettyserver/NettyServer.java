@@ -16,7 +16,9 @@ public class NettyServer {
 		t.start();
 		
 		while (t.isAlive()) {
-			
+			try {
+				Thread.sleep(1);
+			} catch (Exception ex) {}
 		}
 		
 		if (LOG.isInfoEnabled())
